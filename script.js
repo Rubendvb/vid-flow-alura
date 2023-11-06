@@ -1,4 +1,5 @@
 const containerVideos = document.querySelector('.videos__container')
+const searchInput = document.querySelector('.pesquisar__input')
 
 async function searchVideos() {
   try {
@@ -28,3 +29,13 @@ async function searchVideos() {
 }
 
 searchVideos()
+
+searchInput.addEventListener('input', filterSearch)
+
+function filterSearch() {
+  const videos = document.querySelectorAll('.videos__item')
+
+  if (searchInput.value !== '') {
+  } else {
+  }
+}
