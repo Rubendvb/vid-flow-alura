@@ -1,11 +1,16 @@
 const containerVideos = document.querySelector('.videos__container')
 
 async function searchVideos() {
-  const search = await fetch('http://localhost:3000/videos')
-  const videos = await search.json()
+  try {
+    const search = await fetch('http://localhost:3000/videos')
+    const videos = await search.json()
 
-  videos.forEach((video) => {
-    containerVideos.innerHTML += `
+    videos.forEach((video) => {
+      if (video.categoria === '') {
+        throw new Error('Vídeo não tem categoria')
+      }
+
+      containerVideos.innerHTML += `
         <li class="videos__item">
           <iframe src="${video.url}" title="${video.titulo}" frameborder="0" allowfullscreen></iframe>
 
@@ -16,7 +21,10 @@ async function searchVideos() {
           </div>
         </li> 
       `
-  })
+    })
+  } catch (error) {
+    containerVideos.innerHTML = `<p>Houve um erro ao carregar os vídeos ${error}</p>`
+  }
 }
 
 searchVideos()
